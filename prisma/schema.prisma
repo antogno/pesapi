@@ -1,0 +1,276 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider        = "typegraphql-prisma"
+  simpleResolvers = true
+  emitIdAsIDType  = true
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DB_URL")
+}
+
+model Ability {
+  id               Int                @id @default(autoincrement())
+  name             String             @db.VarChar(255)
+  description      String             @db.VarChar(255)
+  min              Int                @default(1) @db.UnsignedTinyInt
+  max              Int                @default(99) @db.UnsignedTinyInt
+  playersAbilities PlayersAbilities[]
+
+  @@map("ability")
+}
+
+model Appearance {
+  id                 Int                  @id @default(autoincrement())
+  name               String               @db.VarChar(255)
+  required           Boolean
+  min                Int?
+  max                Int?
+  values             AppearanceValue[]
+  playersAppearances PlayersAppearances[]
+
+  @@map("appearance")
+}
+
+model AppearanceValue {
+  id                 Int                  @id @default(autoincrement())
+  appearanceId       Int                  @map("appearance_id")
+  value              String               @db.VarChar(255)
+  appearance         Appearance           @relation(fields: [appearanceId], references: [id], map: "appearance_value_ibfk_1")
+  playersAppearances PlayersAppearances[]
+
+  @@map("appearance_value")
+}
+
+model Formation {
+  id          Int    @id @default(autoincrement())
+  name        String @db.VarChar(255)
+  defenders   Int
+  midfielders Int
+  forwards    Int
+  teams       Team[]
+
+  @@map("formation")
+}
+
+model League {
+  id               Int            @id @default(autoincrement())
+  leagueCategoryId Int            @map("league_category_id")
+  name             String         @db.VarChar(255)
+  realName         String?        @map("real_name") @db.VarChar(255)
+  leagueCategory   LeagueCategory @relation(fields: [leagueCategoryId], references: [id], map: "league_ibfk_1")
+  teams            Team[]
+
+  @@map("league")
+}
+
+model LeagueCategory {
+  id      Int      @id @default(autoincrement())
+  name    String   @db.VarChar(255)
+  leagues League[]
+
+  @@map("league_category")
+}
+
+model Nationality {
+  id     Int      @id @default(autoincrement())
+  name   String   @db.VarChar(255)
+  player Player[]
+
+  @@map("nationality")
+}
+
+model Player {
+  id                      Int                       @id @default(autoincrement())
+  nationalityId           Int                       @map("nationality_id")
+  name                    String                    @db.VarChar(255)
+  realName                String?                   @map("real_name") @db.VarChar(255)
+  stripName               String                    @map("strip_name") @db.VarChar(255)
+  nationality             Nationality               @relation(fields: [nationalityId], references: [id], map: "player_ibfk_1")
+  playersAbilities        PlayersAbilities[]
+  playersAppearances      PlayersAppearances[]
+  playersPositions        PlayersPositions[]
+  playersSettings         PlayersSettings[]
+  playersSpecialAbilities PlayersSpecialAbilities[]
+  playersTeams            PlayersTeams[]
+
+  @@map("player")
+}
+
+model PlayersAbilities {
+  id        Int     @id @default(autoincrement())
+  playerId  Int     @map("player_id")
+  abilityId Int     @map("ability_id")
+  value     Int
+  player    Player  @relation(fields: [playerId], references: [id], map: "players_abilities_ibfk_1")
+  ability   Ability @relation(fields: [abilityId], references: [id], map: "players_abilities_ibfk_2")
+
+  @@unique([playerId, abilityId], map: "player_id_2")
+  @@map("players_abilities")
+}
+
+model PlayersAppearances {
+  id                Int              @id @default(autoincrement())
+  playerId          Int              @map("player_id")
+  appearanceId      Int              @map("appearance_id")
+  appearanceValueId Int?             @map("appearance_value_id")
+  value             Int?
+  player            Player           @relation(fields: [playerId], references: [id], map: "players_appearances_ibfk_1")
+  appearance        Appearance       @relation(fields: [appearanceId], references: [id], map: "players_appearances_ibfk_2")
+  appearanceValue   AppearanceValue? @relation(fields: [appearanceValueId], references: [id], onDelete: Restrict, map: "players_appearances_ibfk_3")
+
+  @@unique([playerId, appearanceId], map: "player_id")
+  @@map("players_appearances")
+}
+
+model PlayersPositions {
+  id         Int      @id @default(autoincrement())
+  playerId   Int      @map("player_id")
+  positionId Int      @map("position_id")
+  registered Boolean
+  player     Player   @relation(fields: [playerId], references: [id], map: "players_positions_ibfk_1")
+  position   Position @relation(fields: [positionId], references: [id], map: "players_positions_ibfk_2")
+
+  @@unique([playerId, positionId], map: "player_id_2")
+  @@map("players_positions")
+}
+
+model PlayersSettings {
+  id             Int           @id @default(autoincrement())
+  playerId       Int           @map("player_id")
+  settingId      Int           @map("setting_id")
+  settingValueId Int?          @map("setting_value_id")
+  value          Int?
+  player         Player        @relation(fields: [playerId], references: [id], map: "players_settings_ibfk_1")
+  setting        Setting       @relation(fields: [settingId], references: [id], map: "players_settings_ibfk_2")
+  settingValue   SettingValue? @relation(fields: [settingValueId], references: [id], onDelete: Restrict, map: "players_settings_ibfk_3")
+
+  @@unique([playerId, settingId], map: "player_id")
+  @@map("players_settings")
+}
+
+model PlayersSpecialAbilities {
+  id               Int            @id @default(autoincrement())
+  playerId         Int            @map("player_id")
+  specialAbilityId Int            @map("special_ability_id")
+  active           Boolean
+  player           Player         @relation(fields: [playerId], references: [id], map: "players_special_abilities_ibfk_1")
+  specialAbility   SpecialAbility @relation(fields: [specialAbilityId], references: [id], map: "players_special_abilities_ibfk_2")
+
+  @@unique([playerId, specialAbilityId], map: "player_id")
+  @@map("players_special_abilities")
+}
+
+model PlayersTeams {
+  id           Int     @id @default(autoincrement())
+  playerId     Int     @map("player_id")
+  teamId       Int     @map("team_id")
+  starter      Boolean
+  captain      Boolean
+  longFkTaker  Boolean @map("long_fk_taker")
+  shortFkTaker Boolean @map("short_fk_taker")
+  leftCkTaker  Boolean @map("left_ck_taker")
+  rightCkTaker Boolean @map("right_ck_taker")
+  penaltyTaker Boolean @map("penalty_taker")
+  number       Int
+  player       Player  @relation(fields: [playerId], references: [id], map: "players_teams_ibfk_1")
+  team         Team    @relation(fields: [teamId], references: [id], map: "players_teams_ibfk_2")
+
+  @@unique([playerId, teamId], map: "player_id")
+  @@unique([teamId, number], map: "team_id")
+  @@map("players_teams")
+}
+
+model Position {
+  id                 Int                @id @default(autoincrement())
+  positionCategoryId Int                @map("position_category_id")
+  name               String             @db.VarChar(255)
+  description        String             @db.VarChar(255)
+  short              String             @db.VarChar(255)
+  playersPositions   PlayersPositions[]
+  positionCategory   PositionCategory   @relation(fields: [positionCategoryId], references: [id], map: "position_ibfk_1")
+
+  @@map("position")
+}
+
+model PositionCategory {
+  id        Int        @id @default(autoincrement())
+  name      String     @db.VarChar(255)
+  short     String     @db.VarChar(255)
+  positions Position[]
+
+  @@map("position_category")
+}
+
+model Setting {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(255)
+  description     String            @db.VarChar(255)
+  required        Boolean
+  min             Int?
+  max             Int?
+  playersSettings PlayersSettings[]
+  settingValues   SettingValue[]
+
+  @@map("setting")
+}
+
+model SettingValue {
+  id              Int               @id @default(autoincrement())
+  settingId       Int               @map("setting_id")
+  value           String            @db.VarChar(255)
+  playersSettings PlayersSettings[]
+  setting         Setting           @relation(fields: [settingId], references: [id], map: "setting_value_ibfk_1")
+
+  @@map("setting_value")
+}
+
+model SpecialAbility {
+  id                      Int                       @id @default(autoincrement())
+  name                    String                    @db.VarChar(255)
+  description             String                    @db.VarChar(255)
+  playersSpecialAbilities PlayersSpecialAbilities[]
+
+  @@map("special_ability")
+}
+
+model Stadium {
+  id            Int         @id @default(autoincrement())
+  stadiumAreaId Int         @map("stadium_area_id")
+  name          String      @db.VarChar(255)
+  realName      String?     @map("real_name") @db.VarChar(255)
+  built         DateTime    @db.Date
+  capacity      Int
+  stadiumArea   StadiumArea @relation(fields: [stadiumAreaId], references: [id], map: "stadium_ibfk_1")
+  teams         Team[]
+
+  @@map("stadium")
+}
+
+model StadiumArea {
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(255)
+  stadiums Stadium[]
+
+  @@map("stadium_area")
+}
+
+model Team {
+  id           Int            @id @default(autoincrement())
+  leagueId     Int            @map("league_id")
+  stadiumId    Int            @map("stadium_id")
+  formationId  Int            @map("formation_id")
+  name         String         @db.VarChar(255)
+  realName     String?        @map("real_name") @db.VarChar(255)
+  short        String         @db.VarChar(255)
+  playersTeams PlayersTeams[]
+  league       League         @relation(fields: [leagueId], references: [id], map: "team_ibfk_1")
+  stadium      Stadium        @relation(fields: [stadiumId], references: [id], map: "team_ibfk_2")
+  formation    Formation      @relation(fields: [formationId], references: [id], map: "team_ibfk_3")
+
+  @@map("team")
+}
