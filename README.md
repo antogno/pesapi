@@ -8,6 +8,10 @@
 
 A GraphQL Pro Evolution Soccer 6 API.
 
+<p align="center">
+	<img alt="Screenshot" src="https://raw.githubusercontent.com/antogno/pesapi/master/public/images/screenshot.png">
+</p>
+
 ---
 
 ## Table of contents
