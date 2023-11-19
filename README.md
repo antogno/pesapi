@@ -29,6 +29,13 @@ A GraphQL Pro Evolution Soccer 6 API.
 
 PES API is a GraphQL Pro Evolution Soccer 6 API. It has all the information regarding players, teams, formations, leagues, abilities and special abilities, stadiums and more.
 
+PES API was created using the following tools and technologies:
+
+- [Apollo Server][9];
+- [Fastify][10];
+- [Prisma][11];
+- [TypeGraphQL][12].
+
 PES API also exists thanks to:
 
 - [Flagpedia][1];
@@ -431,3 +438,7 @@ For more information, see the [GNU website][5].
 [6]: https://github.com/antogno/pesapi
 [7]: https://www.linkedin.com/in/antonio-granaldi/
 [8]: https://twitter.com/agranaldi
+[9]: https://www.apollographql.com/docs/apollo-server
+[10]: https://fastify.dev
+[11]: https://www.prisma.io
+[12]: https://typegraphql.com
