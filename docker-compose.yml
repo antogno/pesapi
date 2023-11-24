@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    image: node:20.8.0
+    image: node:20.10.0
     container_name: app
     volumes:
       - .:/app
@@ -16,10 +16,8 @@ services:
     restart: unless-stopped
     networks:
       - pesapi
-    env_file:
-      - .env
   db:
-    image: mysql:8.1.0
+    image: mysql:8.2.0
     container_name: db
     volumes:
       - db:/var/lib/mysql
@@ -31,8 +29,6 @@ services:
     restart: unless-stopped
     networks:
       - pesapi
-    env_file:
-      - .env
 volumes:
   db:
 networks:
