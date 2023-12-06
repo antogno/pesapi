@@ -1,26 +1,29 @@
 {
-	"name": "Pro Evolution Soccer 6 API",
-	"dockerComposeFile": ["../docker-compose.yml"],
-	"service": "app",
-	"workspaceFolder": "/app",
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"eamodio.gitlens",
-				"esbenp.prettier-vscode",
-				"Prisma.prisma",
-				"GraphQL.vscode-graphql",
-				"bierner.markdown-preview-github-styles"
-			],
-			"settings": {
-				"editor.defaultFormatter": "esbenp.prettier-vscode",
-				"editor.formatOnSave": true,
-				"editor.rulers": [80, 120],
-				"editor.stickyScroll.enabled": true,
-				"files.associations": {
-					".env.example": "properties"
-				}
-			}
-		}
-	}
+  "name": "Pro Evolution Soccer 6 API",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "app",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "Prisma.prisma",
+        "GraphQL.vscode-graphql",
+        "bierner.markdown-preview-github-styles"
+      ],
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.detectIndentation": false,
+        "editor.formatOnSave": true,
+        "editor.insertSpaces": true,
+        "editor.rulers": [80, 120],
+        "editor.stickyScroll.enabled": true,
+        "editor.tabSize": 2,
+        "files.associations": {
+          ".env.example": "properties"
+        }
+      }
+    }
+  }
 }
