@@ -6,8 +6,6 @@ services:
     container_name: app
     volumes:
       - .:/app
-    ports:
-      - ${APP_PORT}:4000
     environment:
       NODE_ENV: development
     command: ['sleep', 'infinity']

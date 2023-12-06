@@ -76,7 +76,7 @@ When asked about resetting the database, answer affirmatively.
 $ npm run start:dev
 ```
 
-The API is now accessible in [localhost:4000/graphql](http://localhost:4000/graphql) (change the port with the one you specified in the `.env` file).
+The API is now accessible in [localhost:4000/graphql](http://localhost:4000/graphql).
 
 ## Query examples
 
@@ -88,37 +88,37 @@ Obtaining the starters of the Classic Italy team, with their names, age, stronge
 
 ```graphql
 query Players(
-	$where: PlayersPositionsWhereInput
-	$playersWhere2: PlayerWhereInput
-	$playersSettingsWhere2: PlayersSettingsWhereInput
-	$playersSettingsWhere3: PlayersSettingsWhereInput
-	$orderBy: [PlayerOrderByWithRelationInput!]
+  $where: PlayersPositionsWhereInput
+  $playersWhere2: PlayerWhereInput
+  $playersSettingsWhere2: PlayersSettingsWhereInput
+  $playersSettingsWhere3: PlayersSettingsWhereInput
+  $orderBy: [PlayerOrderByWithRelationInput!]
 ) {
-	players(where: $playersWhere2, orderBy: $orderBy) {
-		id
-		nationality {
-			name
-		}
-		name
-		realName
-		age: playersSettings(where: $playersSettingsWhere2) {
-			value
-		}
-		strongerFoot: playersSettings(where: $playersSettingsWhere3) {
-			settingValue {
-				value
-			}
-		}
-		playersTeams {
-			number
-			captain
-		}
-		playersPositions(where: $where) {
-			position {
-				short
-			}
-		}
-	}
+  players(where: $playersWhere2, orderBy: $orderBy) {
+    id
+    nationality {
+      name
+    }
+    name
+    realName
+    age: playersSettings(where: $playersSettingsWhere2) {
+      value
+    }
+    strongerFoot: playersSettings(where: $playersSettingsWhere3) {
+      settingValue {
+        value
+      }
+    }
+    playersTeams {
+      number
+      captain
+    }
+    playersPositions(where: $where) {
+      position {
+        short
+      }
+    }
+  }
 }
 ```
 
@@ -126,50 +126,50 @@ query Players(
 
 ```json
 {
-	"where": {
-		"registered": {
-			"equals": true
-		}
-	},
-	"playersWhere2": {
-		"playersTeams": {
-			"some": {
-				"team": {
-					"is": {
-						"name": {
-							"equals": "Classic Italy"
-						}
-					}
-				},
-				"starter": {
-					"equals": true
-				}
-			}
-		}
-	},
-	"playersSettingsWhere2": {
-		"setting": {
-			"is": {
-				"name": {
-					"equals": "Age"
-				}
-			}
-		}
-	},
-	"playersSettingsWhere3": {
-		"setting": {
-			"is": {
-				"name": {
-					"equals": "Stronger foot"
-				}
-			}
-		}
-	},
-	"orderBy": [
-		{
-			"name": "asc"
-		}
-	]
+  "where": {
+    "registered": {
+      "equals": true
+    }
+  },
+  "playersWhere2": {
+    "playersTeams": {
+      "some": {
+        "team": {
+          "is": {
+            "name": {
+              "equals": "Classic Italy"
+            }
+          }
+        },
+        "starter": {
+          "equals": true
+        }
+      }
+    }
+  },
+  "playersSettingsWhere2": {
+    "setting": {
+      "is": {
+        "name": {
+          "equals": "Age"
+        }
+      }
+    }
+  },
+  "playersSettingsWhere3": {
+    "setting": {
+      "is": {
+        "name": {
+          "equals": "Stronger foot"
+        }
+      }
+    }
+  },
+  "orderBy": [
+    {
+      "name": "asc"
+    }
+  ]
 }
 ```
 
@@ -197,19 +197,19 @@ Obtaining the Premier League teams (with their names, formation and stadium) tha
 
 ```graphql
 query Teams($where: TeamWhereInput, $orderBy: [TeamOrderByWithRelationInput!]) {
-	teams(where: $where, orderBy: $orderBy) {
-		id
-		name
-		realName
-		short
-		formation {
-			name
-		}
-		stadium {
-			name
-			capacity
-		}
-	}
+  teams(where: $where, orderBy: $orderBy) {
+    id
+    name
+    realName
+    short
+    formation {
+      name
+    }
+    stadium {
+      name
+      capacity
+    }
+  }
 }
 ```
 
@@ -217,29 +217,29 @@ query Teams($where: TeamWhereInput, $orderBy: [TeamOrderByWithRelationInput!]) {
 
 ```json
 {
-	"where": {
-		"league": {
-			"is": {
-				"name": {
-					"equals": "England League"
-				}
-			}
-		},
-		"stadium": {
-			"is": {
-				"capacity": {
-					"gt": 35000
-				}
-			}
-		}
-	},
-	"orderBy": [
-		{
-			"stadium": {
-				"capacity": "desc"
-			}
-		}
-	]
+  "where": {
+    "league": {
+      "is": {
+        "name": {
+          "equals": "England League"
+        }
+      }
+    },
+    "stadium": {
+      "is": {
+        "capacity": {
+          "gt": 35000
+        }
+      }
+    }
+  },
+  "orderBy": [
+    {
+      "stadium": {
+        "capacity": "desc"
+      }
+    }
+  ]
 }
 ```
 
@@ -272,28 +272,28 @@ Obtaining forwards who have the "Shot power" ability value greater than or equal
 
 ```graphql
 query Players(
-	$where: PlayersPositionsWhereInput
-	$playersTeamsWhere2: PlayersTeamsWhereInput
-	$playersWhere2: PlayerWhereInput
-	$playersAbilitiesWhere2: PlayersAbilitiesWhereInput
+  $where: PlayersPositionsWhereInput
+  $playersTeamsWhere2: PlayersTeamsWhereInput
+  $playersWhere2: PlayerWhereInput
+  $playersAbilitiesWhere2: PlayersAbilitiesWhereInput
 ) {
-	players(where: $playersWhere2) {
-		id
-		name
-		playersPositions(where: $where) {
-			position {
-				short
-			}
-		}
-		clubTeam: playersTeams(where: $playersTeamsWhere2) {
-			team {
-				name
-			}
-		}
-		playersAbilities(where: $playersAbilitiesWhere2) {
-			value
-		}
-	}
+  players(where: $playersWhere2) {
+    id
+    name
+    playersPositions(where: $where) {
+      position {
+        short
+      }
+    }
+    clubTeam: playersTeams(where: $playersTeamsWhere2) {
+      team {
+        name
+      }
+    }
+    playersAbilities(where: $playersAbilitiesWhere2) {
+      value
+    }
+  }
 }
 ```
 
@@ -301,104 +301,104 @@ query Players(
 
 ```json
 {
-	"where": {
-		"registered": {
-			"equals": true
-		}
-	},
-	"playersTeamsWhere2": {
-		"team": {
-			"is": {
-				"league": {
-					"is": {
-						"leagueCategory": {
-							"is": {
-								"name": {
-									"equals": "Club"
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	},
-	"playersWhere2": {
-		"playersAbilities": {
-			"some": {
-				"value": {
-					"gte": 90
-				},
-				"ability": {
-					"is": {
-						"name": {
-							"equals": "Shot power"
-						}
-					}
-				}
-			}
-		},
-		"playersSpecialAbilities": {
-			"some": {
-				"active": {
-					"equals": true
-				},
-				"specialAbility": {
-					"is": {
-						"name": {
-							"equals": "Middle shooting"
-						}
-					}
-				}
-			}
-		},
-		"playersPositions": {
-			"some": {
-				"registered": {
-					"equals": true
-				},
-				"position": {
-					"is": {
-						"positionCategory": {
-							"is": {
-								"name": {
-									"equals": "Forward"
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"playersTeams": {
-			"some": {
-				"team": {
-					"is": {
-						"league": {
-							"is": {
-								"leagueCategory": {
-									"is": {
-										"name": {
-											"equals": "Club"
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	},
-	"playersAbilitiesWhere2": {
-		"ability": {
-			"is": {
-				"name": {
-					"equals": "Shot power"
-				}
-			}
-		}
-	}
+  "where": {
+    "registered": {
+      "equals": true
+    }
+  },
+  "playersTeamsWhere2": {
+    "team": {
+      "is": {
+        "league": {
+          "is": {
+            "leagueCategory": {
+              "is": {
+                "name": {
+                  "equals": "Club"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "playersWhere2": {
+    "playersAbilities": {
+      "some": {
+        "value": {
+          "gte": 90
+        },
+        "ability": {
+          "is": {
+            "name": {
+              "equals": "Shot power"
+            }
+          }
+        }
+      }
+    },
+    "playersSpecialAbilities": {
+      "some": {
+        "active": {
+          "equals": true
+        },
+        "specialAbility": {
+          "is": {
+            "name": {
+              "equals": "Middle shooting"
+            }
+          }
+        }
+      }
+    },
+    "playersPositions": {
+      "some": {
+        "registered": {
+          "equals": true
+        },
+        "position": {
+          "is": {
+            "positionCategory": {
+              "is": {
+                "name": {
+                  "equals": "Forward"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "playersTeams": {
+      "some": {
+        "team": {
+          "is": {
+            "league": {
+              "is": {
+                "leagueCategory": {
+                  "is": {
+                    "name": {
+                      "equals": "Club"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "playersAbilitiesWhere2": {
+    "ability": {
+      "is": {
+        "name": {
+          "equals": "Shot power"
+        }
+      }
+    }
+  }
 }
 ```
 
