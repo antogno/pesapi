@@ -102,6 +102,7 @@ const getImage = (folder: string, id: number, logLevel: string = 'error') => {
           resolve(null);
         }
       });
+      /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
     } catch (err) {
       logger.log(logLevel, `Could not find image for ${folder} ID ${id}`);
 
@@ -110,7 +111,7 @@ const getImage = (folder: string, id: number, logLevel: string = 'error') => {
   });
 };
 
-/* eslint-disable-next-line @typescript-eslint/ban-types */
+/* eslint-disable-next-line @typescript-eslint/no-unsafe-function-type */
 const combinedResolvers: NonEmptyArray<Function> = [
   Image,
   PlayerImageResolver,

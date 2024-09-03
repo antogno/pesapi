@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    image: node:21.6.2
+    image: node:22.7.0
     container_name: app
     volumes:
       - .:/app
@@ -15,7 +15,7 @@ services:
     networks:
       - pesapi
   db:
-    image: mysql:8.3.0
+    image: mysql:9.0.1
     container_name: db
     volumes:
       - db:/var/lib/mysql
