@@ -3,6 +3,9 @@
   "dockerComposeFile": ["../docker-compose.yml"],
   "service": "app",
   "workspaceFolder": "/app",
+  "features": {
+    "ghcr.io/nils-geistmann/devcontainers-features/zsh:0": {}
+  },
   "customizations": {
     "vscode": {
       "extensions": [
