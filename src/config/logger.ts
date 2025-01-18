@@ -28,7 +28,7 @@ const format = (convertEmojis: boolean = false, colorize: boolean = false) => {
       info.level = info.level.toUpperCase();
 
       if (convertEmojis) {
-        info.message = emojify(info.message);
+        info.message = emojify(info.message as string);
       }
 
       return info;

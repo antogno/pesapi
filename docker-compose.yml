@@ -2,7 +2,7 @@ version: '3'
 
 services:
   pesapi-app:
-    image: node:22.7.0
+    image: node:23.6.0
     container_name: pesapi-app
     volumes:
       - .:/app
@@ -15,10 +15,10 @@ services:
     networks:
       - pesapi
   pesapi-db:
-    image: mysql:9.0.1
+    image: mysql:9.1.0
     container_name: pesapi-db
     volumes:
-      - db:/var/lib/mysql
+      - pesapi-db:/var/lib/mysql
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: yes
       MYSQL_USER: ${DB_USER}
@@ -40,6 +40,6 @@ services:
     networks:
       - pesapi
 volumes:
-  db:
+  pesapi-db:
 networks:
   pesapi:
