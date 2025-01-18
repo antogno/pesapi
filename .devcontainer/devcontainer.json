@@ -1,7 +1,7 @@
 {
   "name": "Pro Evolution Soccer 6 API",
   "dockerComposeFile": ["../docker-compose.yml"],
-  "service": "app",
+  "service": "pesapi-app",
   "workspaceFolder": "/app",
   "features": {
     "ghcr.io/nils-geistmann/devcontainers-features/zsh:0": {}
